@@ -20,46 +20,50 @@ import br.org.generation.blogPessoal.repository.PostagemRepository;
 
 @RestController
 @RequestMapping("/postagens")
-@CrossOrigin("*") 
+@CrossOrigin("*")
 public class PostagemController {
-	
+
 	@Autowired
 	private PostagemRepository repository;
-	
+
 	@GetMapping
-	public ResponseEntity<List<Postagem>> GetAll(){
+	public ResponseEntity<List<Postagem>> GetAll() {
 		return ResponseEntity.ok(repository.findAll());
-		
+
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Postagem> GetById(@PathVariable long id){
-		return repository.findById(id)
-				.map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
-		
+	public ResponseEntity<Postagem> GetById(@PathVariable long id) {
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+
 	}
-	
-	@GetMapping("/titulo/{titulo}") //adaptando uma forma para que o back não confuda com id acima
-	public ResponseEntity<List<Postagem>> GetByTitulo(@PathVariable String titulo){
+
+	@GetMapping("/titulo/{titulo}") // adaptando uma forma para que o back não confuda com id acima
+	public ResponseEntity<List<Postagem>> GetByTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Postagem> post(@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> post(@RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
-		
+
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<Postagem> put(@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> put(@RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
-	
+
 	}
-	
-	@DeleteMapping("/{id}") //public void pois é um método que não vai retornar nada para o client
-	public void delete (@PathVariable long id) {
+
+	@DeleteMapping("/{id}") // public void pois é um método que não vai retornar nada para o client
+	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
-	
+
+	/*@GetMapping("/titulo/unico/{titulo}") //APAGAR DEPOIS
+	public ResponseEntity <Postagem> getOneTitulo(@PathVariable String titulo){
+		return ResponseEntity.ok(PostagemRepository.findOneByTituloContainingIgnoreCase(titulo));
+		
+	}*/
+
 }

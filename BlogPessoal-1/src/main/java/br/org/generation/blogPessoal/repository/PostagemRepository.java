@@ -1,7 +1,6 @@
 package br.org.generation.blogPessoal.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +14,7 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 		 * ele vai trazer
 		 * Ignore Case - não levar em consideração maiusculo e minusculo
 		 * */
+	//public Postagem findOneByTituloContainingIgnoreCase(String titulo);
+
 
 }
